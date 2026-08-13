@@ -75,6 +75,8 @@ model Theme {
   workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   
   feedback    FeedbackTheme[]
+  
+  @@unique([workspaceId, name])
 }
 
 model FeedbackTheme {

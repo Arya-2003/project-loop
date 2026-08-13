@@ -23,15 +23,14 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const parsed = bulkSchema.safeParse(body.items);
-
     if (!parsed.success) {
       return NextResponse.json({ 
-        message: "Invalid payload format", 
-        errors: parsed.error.errors 
+        message: "Invalid input", 
+        errors: parsed.error.flatten()
       }, { status: 400 });
     }
 
-    const workspaceId = session.user.workspaceId;
+    const workspaceId = session.user.workspaceId as string;
 
     // Process each item: Classify with AI, then save
     const processedItems = await Promise.all(

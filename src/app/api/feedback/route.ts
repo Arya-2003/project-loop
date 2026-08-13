@@ -104,7 +104,7 @@ export async function POST(req: Request) {
           channel,
           sourceRef,
           customerLabel,
-          workspaceId: session.user.workspaceId,
+          workspaceId: session.user.workspaceId as string,
           sentiment: aiResult.sentiment,
         },
       });
@@ -113,14 +113,14 @@ export async function POST(req: Request) {
         const theme = await tx.theme.upsert({
           where: {
             workspaceId_name: {
-              workspaceId: session.user.workspaceId,
+              workspaceId: session.user.workspaceId as string,
               name: themeName,
             },
           },
           update: {},
           create: {
             name: themeName,
-            workspaceId: session.user.workspaceId,
+            workspaceId: session.user.workspaceId as string,
           },
         });
 
